@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+	<!-- using external js file called bind.js -->
+	<script type="text/javascript" src="bind.js"></script>
+</head>
+<body ng-app="app">
+	<h3>Using one way and one time binding</h3> <br/>
+
+	<!-- One way binding:
+	 data flows only from only scope to view
+	 modification on data immediately propagated to view
+	 performed using ng-bind or evaluation expression {{}} -->
+	<div ng-controller = "ctrl">
+		First Number: {{a}}<br/>
+		Second Number: {{b}}<br/>
+		Sum is: {{sum}} <br/>
+		Sum is: <span ng-bind = "sum"></span><br/>
+		<!-- One time binding:
+		 modifications are not propagated
+		 one way binding
+		 uses :: with ng-bind or {{}} -->
+
+		 <!-- ng-bind is only for non input element like <p> <span> <i> <hn>-->
+		Initial value of a : <span ng-bind = "::a"></span><br/>
+		<!-- Here the value of a remains is loaded initiallly and 
+		is the modification is not propagated or change in a
+		is not binded to view -->
+		<button ng-click = "findSum()">Find Sum</button>
+		<!-- here findSum method is called when button is clicked --> 
+		<br/>
+		<br/>
+	</div>
+	<h3>Using two way binding</h3> <br/>
+		<!-- from scope to view and vice-versa
+		uses ng-model for binding
+		modifications are propagated immediately -->
+
+	<div ng-controller = "dblCtrl">
+		First Num: <input type="text" ng-model = "c"/><br/>
+		Second Num: <input type="text" ng-model = "d"/><br/>
+		Summation of {{c}} and {{d}} is {{summation}} <br/>
+		<button ng-click = "findSummation()">Summation</button>
+
+	</div>
+</body>
+</html>

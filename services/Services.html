@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+ <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+ <!-- <script type="text/javascript" src="service.js"></script>  for service .js-->
+ <!-- <script type="text/javascript" src="factoryservice.js"></script> for factoryservice.js-->
+ <!-- <script type="text/javascript" src="serviceservice.js"></script> for serviceservice.js-->
+ <script type="text/javascript" src="providerservice.js"></script>
+<body ng-app="myApp">
+	<div ng-controller = "myCtrl">
+		<input type="text" ng-model = "a"/><br/>
+		<input type="text" ng-model = "b"><br/>
+		Sum of {{a}} and {{b}} is {{sum}}<br/>
+		<button ng-click = findSum()>Add</button>
+	</div>
+</body>
+</html>

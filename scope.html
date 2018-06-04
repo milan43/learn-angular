@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>	
+	  <!-- angular library is used from cdn from <a>https://angularjs.org/</a> online
+	  we can also download angular file and import from <script type="text/javascript" src="path/to/file"></script>
+	  Here we are using angular 1 -->
+	 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+	 <script>
+	 	/**
+	 	 * module defines the application as a module of angular
+	 	 * [] indicates that we are creating a new module otherwise angular will try to find existing module in app
+	 	 * code after var app =angular.module("myApp", []) is used to define variable at rootscope which is availabe everywhere
+	 	 * change made by inherited controller to rootscope variable changes globally in all used field
+	 	*/
+	 	var app =angular.module("myApp", []).run(["$rootScope", function($rootScope){
+	 		$rootScope.taxRate = 40;
+	 	}]);
+	 	/**
+	 	 * controller contatin application logic
+	 	 * values are stored in scope and retrieved from scope
+	 	 * controller works with data with the help of scope coz controller cannot directly use variable and values
+	 	*/
+	 	app.controller("emp", ["$scope", function($scope){
+	 		$scope.name = "Hari";
+	 	}]);
+
+	 	app.controller("empdetail",["$scope", function($scope){
+	 		/**
+	 		 * valiabe salary is initialized that is supplied from dom objects
+	 		*/
+	 		$scope.salary = function(salary){
+	 			this.salary = salary;
+	 		};
+	 	}]);
+
+	 	/**
+	 	 * $rootScope is used to access variable of rootScope level
+	 	 * take care about case-sensitivity
+	 	*/
+	 	app.controller("taxdetail", ["$scope", "$rootScope", function($scope, $rootScope){
+	 		$scope.tax = function(){
+	 			return $scope.salary * $rootScope.taxRate/100;
+	 		};
+	 		$scope.afterTax = function(){
+	 			return $scope.salary - $scope.tax();
+	 		};
+	 	}]);
+	 </script>
+</head>
+<body ng-app = "myApp"> <!-- rootScope is created when we define ng-app and the name must be similiar to module name -->
+	<div ng-controller = "emp">
+		Name: {{name}}<br/>
+		<div ng-controller = "empdetail"> <!-- empdetail inherits emp so name is also available here can be overridden -->
+			{{salary(30000)}}
+			Salary: {{salary}}<br/>
+			<div ng-controller = "taxdetail"> <!-- all the variables are accessable in this controller through scope inheritance -->
+				Tax: {{tax()}}<br/> <!-- tax() is used to call tax method -->
+				AfterTax: {{afterTax()}}
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

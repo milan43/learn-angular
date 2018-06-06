@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+	<script type="text/javascript" src="filter.js"></script>
+</head>
+<body ng-app = "myApp">
+	<div ng-controller = "myCtrl as c">
+		<div>
+			<form class="form-inline">
+				<div class="form-group">
+					<label><strong>Enter ID </strong></label>
+					<input class = "form-control" type="text" ng-model = "empId" placeholder="0" />
+					<label><strong>Enter Name </strong></label>
+					<input class = "form-control" type="text" ng-model = "empName" placeholder="abc" />
+					<label><strong>Enter Salary </strong></label>
+					<input class = "form-control" type="text" ng-model = "empSalary" placeholder="$00.00" />
+					<label><strong>Enter Age </strong></label>
+					<input class = "form-control" type="text" ng-model = "empAge" placeholder="0" />
+				</div>
+				<button type="reset" class="btn btn-danger" >Reset
+					<span class="glyphicon glyphicon-align-left"></span>
+				</button>
+			</form>
+		</div>
+		<div>
+			<table class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<!-- 
+							when user clicks the particular th element the orderByMe method of filter.js is invoked with corresponding parameter to order the table
+						-->
+						<th ng-click = "c.orderByMe('id')" ><b>Id</b></th>
+						<th ng-click = "c.orderByMe('name')" ><b>Name</b></th>
+						<th ng-click = "c.orderByMe('salary')" ><b>Salary</b></th>
+						<th ng-click = "c.orderByMe('age')" ><b>Age</b></th>
+					</tr>
+				</thead>
+				<!--
+					-here the employee array with name and value pair is accessed one by one through   ng-repeat to e variable.
+					-since we havenot defined any scope in controller it by default uses its scope wo we have to make reference of controller to access the variables of controller method
+					-order by is a filter to order the employee table
+					-here we are ordering table based on user's click on th element or we can normally order table as <code>orderBy: 'id' </code>
+					-filter is one filter which has been used to filter data in client side
+					-we can do filter in different fields simultaneously by using comma (,) 
+					-here we are filtering data with specific fields i.e. id:empid ....
+					-empid is retrieved from ng-model of input element
+					-we can use filter as filter : 'a'
+					-there are other filters also such as uppercase, lowercase, date.....
+				-->
+				<tr ng-repeat = "e in c.employees | orderBy: c.ordering | filter : {id : empId , name : empName, salary : empSalary, age: empAge} ">
+					<td>{{e.id}}</td>
+					<td>{{e.name | uppercase}}</td>
+					<!--
+						ng-hide hides manipulates only the css attribute
+						it doesnot remove the emement rather hides them which can be seen from browser when we inspect the page
+						ng-show also does same but in opposite manner
+					-->
+					<td ng-hide = "c.value">{{e.salary | currency :"$" :2}}</td>
+					<!--
+						the td emement is shown only if the condition becomes true
+						it removes the dom from the page if condition donot match
+						it does dom manipulation
+						it removes all css js and dom from page
+					-->
+					<td ng-if = "e.age < 25">{{e.age}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</body>
+</html>
